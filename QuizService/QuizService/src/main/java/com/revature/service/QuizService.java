@@ -25,13 +25,15 @@ public class QuizService {
 		return quizRepository.save(q);
 	}
 	
-	public Quiz updateQuizQuestions(Integer id, Set<Question> questions) {
-		Quiz q = quizRepository.findById(id).get();
-		q.setQuestions(questions);
+	public Quiz saveQuiz(Quiz q) {
 		return quizRepository.save(q);
 	}
 	
-	public Quiz saveQuiz(Quiz q) {
-		return quizRepository.save(q);
+	public void deleteQuiz(Quiz q) {
+		quizRepository.delete(q);
+	}
+	
+	public boolean doesQuizExist(Integer id) {
+		return quizRepository.existsById(id);
 	}
 }

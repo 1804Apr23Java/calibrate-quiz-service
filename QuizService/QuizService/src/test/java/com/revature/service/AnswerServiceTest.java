@@ -1,23 +1,24 @@
 package com.revature.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.beans.Answer;
 import com.revature.beans.Question;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest
 public class AnswerServiceTest {
 	
 	@Autowired
@@ -28,8 +29,8 @@ public class AnswerServiceTest {
 	
 	private Question q;
 	
-	@BeforeClass
-	public void setupForTest() {
+	@Before
+	public void beforeTest() {
 		this.q = qs.saveQuestion(new Question("What are the Capitals of the World", 10, 1));
 	}
 	
@@ -39,10 +40,11 @@ public class AnswerServiceTest {
 		Answer savedAnswer = as.getAnswer(a.getId());
 		assertEquals(savedAnswer.getAnswer_content(), "The Capital of Mexico is Mexico City");
 		assertEquals(savedAnswer.getId(), a.getId());
-		assertEquals(savedAnswer.getQuestion(), this.q);
+		assertEquals(savedAnswer.getQuestion().getQuestion_content(), this.q.getQuestion_content());
 		
 		as.deleteAnswer(savedAnswer);
-		assertNull(as.getAnswer(a.getId()));
+	
+		assertFalse(as.doesAnswerExist(savedAnswer.getId()));
 	}
 	
 	@Test
@@ -50,7 +52,7 @@ public class AnswerServiceTest {
 		Answer a = as.saveAnswer(new Answer("The Capital of Mexico is Mexico City", true, this.q));
 		Answer savedAnswer = as.getAnswer(a.getId());
 		savedAnswer = as.updateAnswerContent(savedAnswer.getId(), "The Capital of Argentina is Buenos Aries");
-		assertEquals(savedAnswer.getAnswer_content(), "The Capital of Australia is Canberra");
+		assertEquals("The Capital of Argentina is Buenos Aries", savedAnswer.getAnswer_content());
 		
 		as.deleteAnswer(savedAnswer);
 	}
@@ -76,6 +78,8 @@ public class AnswerServiceTest {
 		answers.add(b);
 		answers.add(c);
 		
-		Set<Answer> savedAnswers = as.getAnswersByQuuestion(this.q);
+		assertEquals(answers, as.getAnswersByQuestion(this.q));
+		
+		answers.forEach((e) -> { as.deleteAnswer(e); });
 	}
 }

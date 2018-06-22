@@ -49,6 +49,34 @@ public class Answer {
 		this.question = question;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answer_content == null) ? 0 : answer_content.hashCode());
+		result = prime * result + (isCorrect ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Answer other = (Answer) obj;
+		if (answer_content == null) {
+			if (other.answer_content != null)
+				return false;
+		} else if (!answer_content.equals(other.answer_content))
+			return false;
+		if (isCorrect != other.isCorrect)
+			return false;
+		return true;
+	}
+
 	public Integer getId() {
 		return id;
 	}

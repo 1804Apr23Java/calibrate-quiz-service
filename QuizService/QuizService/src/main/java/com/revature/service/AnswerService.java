@@ -45,7 +45,11 @@ public class AnswerService {
 		answerRepository.delete(a);
 	}
 	
-	public Set<Answer> getAnswersByQuuestion(Question q) {
+	public boolean doesAnswerExist(Integer id) {
+		return answerRepository.existsById(id);
+	}
+	
+	public Set<Answer> getAnswersByQuestion(Question q) {
 		return answerRepository.findByQuestion(q);
 	}
 }

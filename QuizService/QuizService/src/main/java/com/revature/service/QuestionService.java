@@ -31,12 +31,6 @@ public class QuestionService {
 		return questionRepository.save(q);
 	}
 	
-	public Question updateQuestionAnswers(int id, Set<Answer> answers) {
-		Question q = questionRepository.findById(id).get();
-		q.setAnswers(answers);
-		return questionRepository.save(q);
-	}
-	
 	public Question updateQuestionLibrary(Integer id, Integer libraryId) {
 		Question q = questionRepository.findById(id).get();
 		q.setLibrary_id(libraryId);
@@ -51,5 +45,17 @@ public class QuestionService {
 	
 	public Question saveQuestion(Question q) {
 		return questionRepository.save(q);
+	}
+	
+	public boolean doesQuestionExist(Integer id) {
+		return questionRepository.existsById(id);
+	}
+	
+	public void deleteQuestion(Question q) {
+		questionRepository.delete(q);
+	}
+	
+	public Set<Question> getQuestionsByLibrary(Integer libraryId) {
+		return questionRepository.findBylibraryId(libraryId);
 	}
 }

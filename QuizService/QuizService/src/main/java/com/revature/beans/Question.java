@@ -32,17 +32,17 @@ public class Question {
 	@Column(name="DIFFICULTY", nullable = false)
 	private Integer difficulty;
 	
-	@OneToMany(targetEntity=Answer.class, cascade = CascadeType.ALL, mappedBy="question", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity=Answer.class, cascade = CascadeType.REMOVE, mappedBy="question", fetch = FetchType.EAGER)
 	private Set<Answer> answers;
 	
 	@Column(name="LIBRARY_ID")
-	private Integer library_id;
+	private Integer libraryId;
 	
 	public Question(String question_content, Integer difficulty, Integer library_id) {
 		super();
 		this.question_content = question_content;
 		this.difficulty = difficulty;
-		this.library_id = library_id;
+		this.libraryId = library_id;
 	}
 	
 	public Question(String question_content, Integer difficulty, Set<Answer> answers, Integer library_id) {
@@ -50,7 +50,7 @@ public class Question {
 		this.question_content = question_content;
 		this.difficulty = difficulty;
 		this.answers = answers;
-		this.library_id = library_id;
+		this.libraryId = library_id;
 	}
 
 	public Question(Integer id, String question_content, Integer difficulty, Set<Answer> answers, Integer library_id) {
@@ -59,15 +59,15 @@ public class Question {
 		this.question_content = question_content;
 		this.difficulty = difficulty;
 		this.answers = answers;
-		this.library_id = library_id;
+		this.libraryId = library_id;
 	}
 
 	public Integer getLibrary_id() {
-		return library_id;
+		return libraryId;
 	}
 
 	public void setLibrary_id(Integer library_id) {
-		this.library_id = library_id;
+		this.libraryId = library_id;
 	}
 
 	public Question() {}
@@ -119,4 +119,40 @@ public class Question {
 		this.answers = answers;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((difficulty == null) ? 0 : difficulty.hashCode());
+		result = prime * result + ((libraryId == null) ? 0 : libraryId.hashCode());
+		result = prime * result + ((question_content == null) ? 0 : question_content.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		if (difficulty == null) {
+			if (other.difficulty != null)
+				return false;
+		} else if (!difficulty.equals(other.difficulty))
+			return false;
+		if (libraryId == null) {
+			if (other.libraryId != null)
+				return false;
+		} else if (!libraryId.equals(other.libraryId))
+			return false;
+		if (question_content == null) {
+			if (other.question_content != null)
+				return false;
+		} else if (!question_content.equals(other.question_content))
+			return false;
+		return true;
+	}
 }
