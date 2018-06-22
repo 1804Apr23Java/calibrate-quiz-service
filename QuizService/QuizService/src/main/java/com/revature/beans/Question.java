@@ -38,6 +38,13 @@ public class Question {
 	@Column(name="LIBRARY_ID")
 	private Integer library_id;
 	
+	public Question(String question_content, Integer difficulty, Integer library_id) {
+		super();
+		this.question_content = question_content;
+		this.difficulty = difficulty;
+		this.library_id = library_id;
+	}
+	
 	public Question(String question_content, Integer difficulty, Set<Answer> answers, Integer library_id) {
 		super();
 		this.question_content = question_content;

@@ -43,9 +43,13 @@ public class QuestionService {
 		return questionRepository.save(q);
 	}
 	
-	public Question saveQuestion(int difficulty, String content) {
-		Question q = new Question(content, difficulty, null);
+	public Question saveQuestion(int difficulty, String content, int libraryId) {
+		Question q = new Question(content, difficulty, libraryId);
 		q = questionRepository.save(q);
 		return q;
+	}
+	
+	public Question saveQuestion(Question q) {
+		return questionRepository.save(q);
 	}
 }

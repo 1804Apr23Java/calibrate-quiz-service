@@ -1,5 +1,7 @@
 package com.revature.service;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +39,13 @@ public class AnswerService {
 	
 	public Answer saveAnswer(Answer a) {
 		return answerRepository.save(a);
+	}
+	
+	public void deleteAnswer(Answer a) {
+		answerRepository.delete(a);
+	}
+	
+	public Set<Answer> getAnswersByQuuestion(Question q) {
+		return answerRepository.findByQuestion(q);
 	}
 }
