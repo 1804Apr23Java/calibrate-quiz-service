@@ -9,6 +9,7 @@ public class QuestionDTO {
 	private Integer question_id;
 	private String question_content;
 	private Integer difficulty;
+	private Integer library_id;
 	
 	private Set<Answer> answers;
 	
@@ -16,6 +17,15 @@ public class QuestionDTO {
 		this.question_id = q.getId();
 		this.question_content = q.getQuestion_content();
 		this.difficulty = q.getDifficulty();
+		this.library_id = q.getLibrary_id();
+	}
+
+	public Integer getLibrary_id() {
+		return library_id;
+	}
+
+	public void setLibrary_id(Integer library_id) {
+		this.library_id = library_id;
 	}
 
 	public QuestionDTO(Integer question_id, String question_content, Integer difficulty, Set<Answer> answers) {

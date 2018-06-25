@@ -27,6 +27,12 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
+	@GetMapping("/lib/{library_id}")
+	public ResponseEntity<Set<Question>> getQuestionsByLibraryId(@PathVariable int library_id) {
+		Set<Question> questions = questionService.getQuestionsByLibrary(library_id);
+		return new ResponseEntity<Set<Question>>(questions, HttpStatus.OK);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<QuestionDTO> getQuestion(@PathVariable int id) {
 		return new ResponseEntity<QuestionDTO>(new QuestionDTO(questionService.getQuestion(id)), HttpStatus.OK);
@@ -47,11 +53,5 @@ public class QuestionController {
 		Question q = questionService.saveQuestion(new Question(content, difficulty, library_id));
 		QuestionDTO qDTO = new QuestionDTO(q);
 		return new ResponseEntity<QuestionDTO>(qDTO, HttpStatus.OK);
-	}
-	
-	@GetMapping("/lib/{id}")
-	public ResponseEntity<Set<Question>> getQuestionsByLibraryId(@PathVariable int library_id) {
-		Set<Question> questions = questionService.getQuestionsByLibrary(library_id);
-		return new ResponseEntity<Set<Question>>(questions, HttpStatus.OK);
 	}
 }
