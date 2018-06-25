@@ -81,5 +81,7 @@ public class QuestionServiceTest {
 		questions.add(c);
 		
 		assertEquals(questions, qs.getQuestionsByLibrary(1));
+		
+		questions.forEach((e) -> { qs.deleteQuestion(e); });
 	}
 }

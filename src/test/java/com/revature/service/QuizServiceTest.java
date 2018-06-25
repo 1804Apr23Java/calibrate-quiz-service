@@ -46,6 +46,7 @@ public class QuizServiceTest {
 		assertEquals(questions, qz.getQuestions());
 		
 		quizService.deleteQuiz(qz);
+		questions.forEach((e) -> { questionService.deleteQuestion(e); });
 		
 		assertFalse(quizService.doesQuizExist(qz.getId()));
 	}
@@ -81,6 +82,7 @@ public class QuizServiceTest {
 		assertEquals(qz.getQuestions(), questions);
 		
 		quizService.deleteQuiz(qz);
+		questions.forEach((e) -> { questionService.deleteQuestion(e);});
 		assertFalse(quizService.doesQuizExist(qz.getId()));
 	}
 }
