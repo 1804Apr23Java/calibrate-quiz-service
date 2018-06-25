@@ -52,4 +52,8 @@ public class AnswerService {
 	public Set<Answer> getAnswersByQuestion(Question q) {
 		return answerRepository.findByQuestion(q);
 	}
+	
+	public Set<Answer> getAnswersByQuestionId(Integer id) {
+		return answerRepository.findByQuestionId(id);
+	}
 }

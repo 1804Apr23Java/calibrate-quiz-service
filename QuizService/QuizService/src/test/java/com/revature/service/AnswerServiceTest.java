@@ -82,4 +82,20 @@ public class AnswerServiceTest {
 		
 		answers.forEach((e) -> { as.deleteAnswer(e); });
 	}
+	
+	@Test
+	public void getAnswersByQuestionIdTest() {
+		Answer a = as.saveAnswer(new Answer("The Capital of Italy is Milan", true, this.q));
+		Answer b = as.saveAnswer(new Answer("The Capital of China is Beijing", true, this.q));
+		Answer c = as.saveAnswer(new Answer("The Capital of Japan is Tokyo", true, this.q));
+		
+		Set<Answer> answers = new HashSet<>();
+		answers.add(a);
+		answers.add(b);
+		answers.add(c);
+		
+		assertEquals(answers, as.getAnswersByQuestionId(this.q.getId()));
+		
+		answers.forEach((e) -> { as.deleteAnswer(e); });
+	}
 }

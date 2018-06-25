@@ -11,4 +11,5 @@ import com.revature.beans.Question;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
 	public Set<Answer> findByQuestion(Question q);
+	public Set<Answer> findByQuestionId(Integer id);
 }
