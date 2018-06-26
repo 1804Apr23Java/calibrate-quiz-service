@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.DTO.AnswerDTO;
 import com.revature.beans.Answer;
 import com.revature.beans.Question;
 import com.revature.service.AnswerService;
@@ -28,9 +29,9 @@ public class AnswerController {
 	@Autowired QuestionService questionService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Answer> getAnswer(@PathVariable int id) {
+	public ResponseEntity<AnswerDTO> getAnswer(@PathVariable int id) {
 		Answer a = answerService.getAnswer(id);
-		return new ResponseEntity<Answer>(a, HttpStatus.OK);
+		return new ResponseEntity<AnswerDTO>(new AnswerDTO(a), HttpStatus.OK);
 	}
 
 	@GetMapping("/question/{id}")
