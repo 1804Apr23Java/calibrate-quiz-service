@@ -71,16 +71,19 @@ public class QuestionServiceTest {
 	
 	@Test
 	public void getQuestionsByLibraryTest() {
+		Set<Question> setup = qs.getQuestionsByLibrary(55);
+		setup.forEach((e) -> { qs.deleteQuestion(e); });
+		
 		Set<Question> questions = new HashSet<>();
 		
-		Question a = qs.saveQuestion(new Question("What are the capitals of the Earth", 10, 1));
+		Question a = qs.saveQuestion(new Question("What are the capitals of the Earth", 10, 55));
 		questions.add(a);
-		Question b = qs.saveQuestion(new Question("What are the capitals of the USA", 10, 1));
+		Question b = qs.saveQuestion(new Question("What are the capitals of the USA", 10, 55));
 		questions.add(b);
-		Question c = qs.saveQuestion(new Question("What are the capitals of Canada", 10, 1));
+		Question c = qs.saveQuestion(new Question("What are the capitals of Canada", 10, 55));
 		questions.add(c);
 		
-		assertEquals(questions, qs.getQuestionsByLibrary(1));
+		assertEquals(questions, qs.getQuestionsByLibrary(55));
 		
 		questions.forEach((e) -> { qs.deleteQuestion(e); });
 	}
