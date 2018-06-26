@@ -39,13 +39,13 @@ public class QuestionController {
 	}
 	
 	@PutMapping("/update/{id}/{difficulty}")
-	public ResponseEntity<QuestionDTO> updateQuestionDifficulty(@PathVariable int question_id, @PathVariable int difficulty) {
-		return new ResponseEntity<QuestionDTO>(new QuestionDTO(questionService.updateQuestionDifficulty(question_id, difficulty)), HttpStatus.OK);
+	public ResponseEntity<QuestionDTO> updateQuestionDifficulty(@PathVariable int id, @PathVariable int difficulty) {
+		return new ResponseEntity<QuestionDTO>(new QuestionDTO(questionService.updateQuestionDifficulty(id, difficulty)), HttpStatus.OK);
 	}
 	
-	@PutMapping("/update/{id}/content")
-	public ResponseEntity<QuestionDTO> updateQuestionContent(@PathVariable int question_id, @RequestBody String content) {
-		return new ResponseEntity<QuestionDTO>(new QuestionDTO(questionService.updateQuestionContent(question_id, content)), HttpStatus.OK);
+	@PutMapping("/update/{id}")
+	public ResponseEntity<QuestionDTO> updateQuestionContent(@PathVariable int id, @RequestParam String content) {
+		return new ResponseEntity<QuestionDTO>(new QuestionDTO(questionService.updateQuestionContent(id, content)), HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")

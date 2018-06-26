@@ -53,8 +53,8 @@ public class QuestionControllerTest {
 		assertEquals(new Integer(1), resp.get("difficulty"));
 		assertEquals(new Integer(2), resp.get("library_id"));
 		
-		questionService.deleteQuestion(questionService.getQuestion((Integer) resp.get("question_id")));
-		assertFalse(questionService.doesQuestionExist((Integer) resp.get("question_id")));
+		questionService.deleteQuestion(questionService.getQuestion((Integer) resp.get("id")));
+		assertFalse(questionService.doesQuestionExist((Integer) resp.get("id")));
 	}
 	
 	@Test
@@ -73,5 +73,68 @@ public class QuestionControllerTest {
 		assertEquals(200, response.getStatusCode());
 		ArrayList<Question> resp = new ObjectMapper().readValue(response.asString(), ArrayList.class);
 		assertEquals(questions.size(), new HashSet<Question>(resp).size());
+	}
+	
+	@Test
+	public void getQuestionByIdTest() throws JsonParseException, JsonMappingException, IOException {
+		Question q = questionService.saveQuestion(new Question("Test Question", 1, 22));
+		
+		RestAssured.port = 8763;
+		RequestSpecification request = RestAssured.given();
+		Response response = request.get("/question/" + q.getId());
+		
+		assertEquals(200, response.getStatusCode());
+		Question responseQuestion = new ObjectMapper().readValue(response.asString(), Question.class);
+		
+		assertEquals(q.getId(), responseQuestion.getId());
+		assertEquals(q.getDifficulty(), responseQuestion.getDifficulty());
+		assertEquals(q.getLibrary_id(), responseQuestion.getLibrary_id());
+		assertEquals(q.getQuestion_content(), responseQuestion.getQuestion_content());
+		
+		questionService.deleteQuestion(q);
+		assertFalse(questionService.doesQuestionExist(q.getId()));
+	}
+	
+	@Test
+	public void updateQuestionContentTest() throws JsonParseException, JsonMappingException, IOException {
+		Question q = questionService.saveQuestion(new Question("Test Question", 1, 23));
+		
+		RestAssured.port = 8763;
+		RequestSpecification request = RestAssured.given();
+		request.formParam("content", "What is 5 + 5?");
+		
+		Response response = request.put("/question/update/" + q.getId());
+		
+		assertEquals(200, response.getStatusCode());
+		Question responseQuestion = new ObjectMapper().readValue(response.asString(), Question.class);
+		
+		assertEquals(q.getId(), responseQuestion.getId());
+		assertEquals(q.getDifficulty(), responseQuestion.getDifficulty());
+		assertEquals(q.getLibrary_id(), responseQuestion.getLibrary_id());
+		assertEquals("What is 5 + 5?", responseQuestion.getQuestion_content());
+		
+		questionService.deleteQuestion(responseQuestion);
+		assertFalse(questionService.doesQuestionExist(responseQuestion.getId()));
+	}
+	
+	@Test
+	public void updateQuestionDifficultyTest() throws JsonParseException, JsonMappingException, IOException {
+		Question q = questionService.saveQuestion(new Question("Test Question", 1, 27));
+		
+		RestAssured.port = 8763;
+		RequestSpecification request = RestAssured.given();
+		
+		Response response = request.put("/question/update/" + q.getId() + "/5");
+		
+		assertEquals(200, response.getStatusCode());
+		Question responseQuestion = new ObjectMapper().readValue(response.asString(), Question.class);
+		
+		assertEquals(q.getId(), responseQuestion.getId());
+		assertEquals(new Integer(5)	, responseQuestion.getDifficulty());
+		assertEquals(q.getLibrary_id(), responseQuestion.getLibrary_id());
+		assertEquals(q.getQuestion_content(), responseQuestion.getQuestion_content());
+		
+		questionService.deleteQuestion(responseQuestion);
+		assertFalse(questionService.doesQuestionExist(responseQuestion.getId()));
 	}
 }

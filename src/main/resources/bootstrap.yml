@@ -4,4 +4,4 @@ spring:
   cloud:
     config:
       uri: ${CONFIG_HOME}
-fail-fast: true
+      fail-fast: true
