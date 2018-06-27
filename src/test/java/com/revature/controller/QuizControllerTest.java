@@ -83,7 +83,7 @@ public class QuizControllerTest {
 		request.formParam("libraryIds", list);
 		request.formParam("name", "Test Quiz 2");
 		request.formParam("numQuestions", 5);
-		Response response = request.get("/quiz/generate");
+		Response response = request.post("/quiz/generate");
 		assertEquals(200, response.getStatusCode());
 		
 		QuizDTO responseQuiz = new ObjectMapper().readValue(response.asString(), QuizDTO.class);
