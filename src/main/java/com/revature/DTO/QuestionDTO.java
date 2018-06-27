@@ -14,13 +14,6 @@ import com.revature.service.AnswerService;
 import com.revature.service.QuestionService;
 
 public class QuestionDTO implements Serializable {
-	
-	@Autowired
-	private AnswerService answerService;
-	
-	@Autowired
-	private QuestionService questionService;
-	
 	/**
 	 * 
 	 */
@@ -29,8 +22,6 @@ public class QuestionDTO implements Serializable {
 	private String value;
 	private Integer difficulty;
 	private Integer libraryId;
-	
-	private Set<AnswerDTO> answers;
 	
 	public QuestionDTO() {
 	}
@@ -42,21 +33,10 @@ public class QuestionDTO implements Serializable {
 		this.libraryId = q.getLibrary_id();
 	}
 
-	public Set<AnswerDTO> getAnswers() {
-		Set<AnswerDTO> a = new HashSet<>();
-		for(Answer ans: answerService.getAnswersByQuestion(questionService.getQuestion(this.questionId))) {
-			a.add(new AnswerDTO(ans));
-		}
-		return a;
-	}
-
-	public void setAnswers(Set<AnswerDTO> answers) {
-		this.answers = answers;
-	}
-
 	public Integer getQuestionId() {
 		return questionId;
 	}
+	
 	public void setQuestionId(Integer questionId) {
 		this.questionId = questionId;
 	}
