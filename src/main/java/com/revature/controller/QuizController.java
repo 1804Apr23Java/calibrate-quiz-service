@@ -70,7 +70,7 @@ public class QuizController {
 				as.add(new AnswerDTO(l));
 			});
 			p.setAnswers(as);
-			g.add(new QuestionDTO(e)); 
+			g.add(p); 
 		
 		});
 		
