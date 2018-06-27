@@ -50,7 +50,7 @@ public class QuestionControllerTest {
 		assertEquals(200, response.getStatusCode());
 		
 		QuestionDTO resp = new ObjectMapper().readValue(response.asString(), QuestionDTO.class);
-		assertEquals("What is the capital of Australia", resp.getQuestionValue());
+		assertEquals("What is the capital of Australia", resp.getValue());
 		assertEquals(new Integer(1), resp.getDifficulty());
 		assertEquals(new Integer(2), resp.getLibraryId());
 		
@@ -90,7 +90,7 @@ public class QuestionControllerTest {
 		assertEquals(q.getId(), responseQuestion.getQuestionId());
 		assertEquals(q.getDifficulty(), responseQuestion.getDifficulty());
 		assertEquals(q.getLibrary_id(), responseQuestion.getLibraryId());
-		assertEquals(q.getQuestion_content(), responseQuestion.getQuestionValue());
+		assertEquals(q.getQuestion_content(), responseQuestion.getValue());
 		
 		questionService.deleteQuestion(q);
 		assertFalse(questionService.doesQuestionExist(q.getId()));
@@ -112,7 +112,7 @@ public class QuestionControllerTest {
 		assertEquals(q.getId(), responseQuestion.getQuestionId());
 		assertEquals(q.getDifficulty(), responseQuestion.getDifficulty());
 		assertEquals(q.getLibrary_id(), responseQuestion.getLibraryId());
-		assertEquals("What is 5 + 5?", responseQuestion.getQuestionValue());
+		assertEquals("What is 5 + 5?", responseQuestion.getValue());
 		
 		questionService.deleteQuestion(questionService.getQuestion(responseQuestion.getQuestionId()));
 	}
@@ -132,7 +132,7 @@ public class QuestionControllerTest {
 		assertEquals(q.getId(), responseQuestion.getQuestionId());
 		assertEquals(new Integer(5)	, responseQuestion.getDifficulty());
 		assertEquals(q.getLibrary_id(), responseQuestion.getLibraryId());
-		assertEquals(q.getQuestion_content(), responseQuestion.getQuestionValue());
+		assertEquals(q.getQuestion_content(), responseQuestion.getValue());
 		
 		questionService.deleteQuestion(questionService.getQuestion(responseQuestion.getQuestionId()));
 	}
