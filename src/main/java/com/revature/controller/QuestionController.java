@@ -45,7 +45,7 @@ public class QuestionController {
 			});
 			dto.setAnswers(ansd);
 			
-			questionDTOs.add(new QuestionDTO(e)); 
+			questionDTOs.add(dto); 
 		});
 		return new ResponseEntity<Set<QuestionDTO>>(questionDTOs, HttpStatus.OK);
 	}
