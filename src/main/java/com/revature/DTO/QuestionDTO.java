@@ -41,10 +41,6 @@ public class QuestionDTO implements Serializable {
 		this.value = q.getQuestion_content();
 		this.difficulty = q.getDifficulty();
 		this.libraryId = q.getLibrary_id();
-		
-		Set<AnswerDTO> a = new HashSet<AnswerDTO>();
-		q.getAnswers().forEach((e) -> { a.add(new AnswerDTO(e)); });
-		this.answers = a;
 	}
 
 	public Integer getQuestionId() {
