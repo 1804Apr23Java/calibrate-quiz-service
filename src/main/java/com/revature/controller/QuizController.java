@@ -36,7 +36,7 @@ public class QuizController {
 	@Autowired
 	private AnswerService answerService;
 	
-	@GetMapping("/generate")
+	@PostMapping("/generate")
 	public ResponseEntity<QuizDTO> generateQuiz(@RequestParam List<Integer> libraryIds, @RequestParam String name, @RequestParam int numQuestions) {
 		Quiz q = quizService.generateQuiz(name, libraryIds, numQuestions);
 		
