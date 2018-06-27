@@ -47,7 +47,7 @@ public class AnswerControllerTest {
 		
 		AnswerDTO answer = new ObjectMapper().readValue(response.asString(), AnswerDTO.class);
 		assertEquals(200, response.getStatusCode());
-		assertEquals("10", answer.getAnswer_content());
+		assertEquals("10", answer.getValue());
 		assertEquals(q.getId(), answer.getQuestionId());
 		
 		answerService.deleteAnswer(a);
@@ -96,11 +96,11 @@ public class AnswerControllerTest {
 		assertEquals(200, response.getStatusCode());
 		
 		AnswerDTO a = new ObjectMapper().readValue(response.asString(), AnswerDTO.class);
-		assertEquals("The capital of Italy is Rome", a.getAnswer_content());
+		assertEquals("The capital of Italy is Rome", a.getValue());
 		assertEquals(true, a.isCorrect());
 		assertEquals(q.getId(), a.getQuestionId());
 		
-		Answer ans = answerService.getAnswer(a.getAnswer_id().intValue());
+		Answer ans = answerService.getAnswer(a.getAnswerId().intValue());
 		answerService.deleteAnswer(ans);
 		questionService.deleteQuestion(q);
 	}

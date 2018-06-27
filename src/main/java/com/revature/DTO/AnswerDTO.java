@@ -5,42 +5,34 @@ import com.revature.beans.Question;
 
 public class AnswerDTO {
 	
-	private Long answer_id;
-	private String answer_content;
+	private Long answerId;
+	private String value;
 	private boolean isCorrect;
 	private Integer questionId;
 	
 	public AnswerDTO() {}
 	
 	public AnswerDTO(Answer a) {
-		this.answer_id = a.getId().longValue();
-		this.answer_content = a.getAnswer_content();
+		this.answerId = a.getId().longValue();
+		this.value = a.getAnswer_content();
 		this.isCorrect = a.isCorrect();
 		this.questionId = a.getQuestion().getId();
 	}
-	
-	public AnswerDTO(Long answer_id, String answer_content, boolean isCorrect, Integer questionId) {
-		super();
-		this.answer_id = answer_id;
-		this.answer_content = answer_content;
-		this.isCorrect = isCorrect;
-		this.questionId = questionId;
+
+	public Long getAnswerId() {
+		return answerId;
 	}
 
-	public Long getAnswer_id() {
-		return answer_id;
+	public void setAnswerId(Long answerId) {
+		this.answerId = answerId;
 	}
 
-	public void setAnswer_id(Long answer_id) {
-		this.answer_id = answer_id;
+	public String getValue() {
+		return value;
 	}
 
-	public String getAnswer_content() {
-		return answer_content;
-	}
-
-	public void setAnswer_content(String answer_content) {
-		this.answer_content = answer_content;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public boolean isCorrect() {
@@ -59,14 +51,22 @@ public class AnswerDTO {
 		this.questionId = questionId;
 	}
 
+	public AnswerDTO(Long answerId, String value, boolean isCorrect, Integer questionId) {
+		super();
+		this.answerId = answerId;
+		this.value = value;
+		this.isCorrect = isCorrect;
+		this.questionId = questionId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((answer_content == null) ? 0 : answer_content.hashCode());
-		result = prime * result + ((answer_id == null) ? 0 : answer_id.hashCode());
+		result = prime * result + ((answerId == null) ? 0 : answerId.hashCode());
 		result = prime * result + (isCorrect ? 1231 : 1237);
 		result = prime * result + ((questionId == null) ? 0 : questionId.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -79,15 +79,10 @@ public class AnswerDTO {
 		if (getClass() != obj.getClass())
 			return false;
 		AnswerDTO other = (AnswerDTO) obj;
-		if (answer_content == null) {
-			if (other.answer_content != null)
+		if (answerId == null) {
+			if (other.answerId != null)
 				return false;
-		} else if (!answer_content.equals(other.answer_content))
-			return false;
-		if (answer_id == null) {
-			if (other.answer_id != null)
-				return false;
-		} else if (!answer_id.equals(other.answer_id))
+		} else if (!answerId.equals(other.answerId))
 			return false;
 		if (isCorrect != other.isCorrect)
 			return false;
@@ -96,7 +91,13 @@ public class AnswerDTO {
 				return false;
 		} else if (!questionId.equals(other.questionId))
 			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
+			return false;
 		return true;
 	}
+	
 	
 }
