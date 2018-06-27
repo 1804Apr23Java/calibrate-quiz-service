@@ -1,15 +1,23 @@
 package com.revature.DTO;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import com.revature.beans.Answer;
 import com.revature.beans.Question;
 
-public class QuestionDTO {
+public class QuestionDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2324070295258377882L;
 	private Integer questionId;
 	private String questionValue;
 	private Integer difficulty;
 	private Integer libraryId;
+	
+	public QuestionDTO() {
+	}
 	
 	public QuestionDTO(Question q) {
 		this.questionId = q.getId();
