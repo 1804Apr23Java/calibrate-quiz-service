@@ -32,7 +32,7 @@ public class Question {
 	@Column(name="DIFFICULTY", nullable = false)
 	private Integer difficulty;
 	
-	@OneToMany(targetEntity=Answer.class, cascade = CascadeType.REMOVE, mappedBy="question", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity=Answer.class, cascade = CascadeType.REMOVE, mappedBy="question", fetch = FetchType.LAZY)
 	private Set<Answer> answers;
 	
 	@Column(name="LIBRARY_ID")
