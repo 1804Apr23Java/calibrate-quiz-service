@@ -2,18 +2,24 @@ package com.revature.DTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.beans.Answer;
 import com.revature.beans.Question;
 import com.revature.service.AnswerService;
+import com.revature.service.QuestionService;
 
 public class QuestionDTO implements Serializable {
 	
 	@Autowired
 	private AnswerService answerService;
+	
+	@Autowired
+	private QuestionService questionService;
 	
 	/**
 	 * 
@@ -24,7 +30,7 @@ public class QuestionDTO implements Serializable {
 	private Integer difficulty;
 	private Integer libraryId;
 	
-	private List<AnswerDTO> answers;
+	private Set<AnswerDTO> answers;
 	
 	public QuestionDTO() {
 	}
@@ -34,16 +40,17 @@ public class QuestionDTO implements Serializable {
 		this.value = q.getQuestion_content();
 		this.difficulty = q.getDifficulty();
 		this.libraryId = q.getLibrary_id();
-		List<AnswerDTO> a = new ArrayList<>();
-		for(Answer ans: answerService.getAnswersByQuestion(q)) {
+	}
+
+	public Set<AnswerDTO> getAnswers() {
+		Set<AnswerDTO> a = new HashSet<>();
+		for(Answer ans: answerService.getAnswersByQuestion(questionService.getQuestion(this.questionId))) {
 			a.add(new AnswerDTO(ans));
 		}
+		return a;
 	}
-	
-	public List<AnswerDTO> getAnswers() {
-		return answers;
-	}
-	public void setAnswers(List<AnswerDTO> answers) {
+
+	public void setAnswers(Set<AnswerDTO> answers) {
 		this.answers = answers;
 	}
 
