@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.beans.Question;
+import com.revature.DTO.QuestionDTO;
 import com.revature.service.QuestionService;
 
 import io.restassured.RestAssured;
@@ -48,13 +49,13 @@ public class QuestionControllerTest {
 		Response response = request.post("/question/add");
 		assertEquals(200, response.getStatusCode());
 		
-		HashMap<String, Object> resp = new ObjectMapper().readValue(response.asString(), HashMap.class);
-		assertEquals("What is the capital of Australia", resp.get("question_content"));
-		assertEquals(new Integer(1), resp.get("difficulty"));
-		assertEquals(new Integer(2), resp.get("library_id"));
+		QuestionDTO resp = new ObjectMapper().readValue(response.asString(), QuestionDTO.class);
+		assertEquals("What is the capital of Australia", resp.getQuestionValue());
+		assertEquals(new Integer(1), resp.getDifficulty());
+		assertEquals(new Integer(2), resp.getLibraryId());
 		
-		questionService.deleteQuestion(questionService.getQuestion((Integer) resp.get("id")));
-		assertFalse(questionService.doesQuestionExist((Integer) resp.get("id")));
+		questionService.deleteQuestion(questionService.getQuestion((Integer) resp.getQuestionId()));
+		assertFalse(questionService.doesQuestionExist((Integer) resp.getQuestionId()));
 	}
 	
 	@Test
@@ -71,8 +72,8 @@ public class QuestionControllerTest {
 		Response response = request.get("/question/lib/7");
 		
 		assertEquals(200, response.getStatusCode());
-		ArrayList<Question> resp = new ObjectMapper().readValue(response.asString(), ArrayList.class);
-		assertEquals(questions.size(), new HashSet<Question>(resp).size());
+		ArrayList<QuestionDTO> resp = new ObjectMapper().readValue(response.asString(), ArrayList.class);
+		assertEquals(questions.size(), resp.size());
 	}
 	
 	@Test
@@ -84,12 +85,12 @@ public class QuestionControllerTest {
 		Response response = request.get("/question/" + q.getId());
 		
 		assertEquals(200, response.getStatusCode());
-		Question responseQuestion = new ObjectMapper().readValue(response.asString(), Question.class);
+		QuestionDTO responseQuestion = new ObjectMapper().readValue(response.asString(), QuestionDTO.class);
 		
-		assertEquals(q.getId(), responseQuestion.getId());
+		assertEquals(q.getId(), responseQuestion.getQuestionId());
 		assertEquals(q.getDifficulty(), responseQuestion.getDifficulty());
-		assertEquals(q.getLibrary_id(), responseQuestion.getLibrary_id());
-		assertEquals(q.getQuestion_content(), responseQuestion.getQuestion_content());
+		assertEquals(q.getLibrary_id(), responseQuestion.getLibraryId());
+		assertEquals(q.getQuestion_content(), responseQuestion.getQuestionValue());
 		
 		questionService.deleteQuestion(q);
 		assertFalse(questionService.doesQuestionExist(q.getId()));
@@ -106,15 +107,14 @@ public class QuestionControllerTest {
 		Response response = request.put("/question/update/" + q.getId());
 		
 		assertEquals(200, response.getStatusCode());
-		Question responseQuestion = new ObjectMapper().readValue(response.asString(), Question.class);
+		QuestionDTO responseQuestion = new ObjectMapper().readValue(response.asString(), QuestionDTO.class);
 		
-		assertEquals(q.getId(), responseQuestion.getId());
+		assertEquals(q.getId(), responseQuestion.getQuestionId());
 		assertEquals(q.getDifficulty(), responseQuestion.getDifficulty());
-		assertEquals(q.getLibrary_id(), responseQuestion.getLibrary_id());
-		assertEquals("What is 5 + 5?", responseQuestion.getQuestion_content());
+		assertEquals(q.getLibrary_id(), responseQuestion.getLibraryId());
+		assertEquals("What is 5 + 5?", responseQuestion.getQuestionValue());
 		
-		questionService.deleteQuestion(responseQuestion);
-		assertFalse(questionService.doesQuestionExist(responseQuestion.getId()));
+		questionService.deleteQuestion(questionService.getQuestion(responseQuestion.getQuestionId()));
 	}
 	
 	@Test
@@ -127,14 +127,13 @@ public class QuestionControllerTest {
 		Response response = request.put("/question/update/" + q.getId() + "/5");
 		
 		assertEquals(200, response.getStatusCode());
-		Question responseQuestion = new ObjectMapper().readValue(response.asString(), Question.class);
+		QuestionDTO responseQuestion = new ObjectMapper().readValue(response.asString(), QuestionDTO.class);
 		
-		assertEquals(q.getId(), responseQuestion.getId());
+		assertEquals(q.getId(), responseQuestion.getQuestionId());
 		assertEquals(new Integer(5)	, responseQuestion.getDifficulty());
-		assertEquals(q.getLibrary_id(), responseQuestion.getLibrary_id());
-		assertEquals(q.getQuestion_content(), responseQuestion.getQuestion_content());
+		assertEquals(q.getLibrary_id(), responseQuestion.getLibraryId());
+		assertEquals(q.getQuestion_content(), responseQuestion.getQuestionValue());
 		
-		questionService.deleteQuestion(responseQuestion);
-		assertFalse(questionService.doesQuestionExist(responseQuestion.getId()));
+		questionService.deleteQuestion(questionService.getQuestion(responseQuestion.getQuestionId()));
 	}
 }
