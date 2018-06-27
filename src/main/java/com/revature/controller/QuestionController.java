@@ -52,7 +52,17 @@ public class QuestionController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<QuestionDTO> getQuestion(@PathVariable int id) {
-		return new ResponseEntity<QuestionDTO>(new QuestionDTO(questionService.getQuestion(id)), HttpStatus.OK);
+		Question q = questionService.getQuestion(id);
+
+		Set<AnswerDTO> ansd = new HashSet<AnswerDTO>();
+		answerService.getAnswersByQuestion(q).forEach((etd) -> {
+			ansd.add(new AnswerDTO(etd));
+		});
+		
+		QuestionDTO qq = new QuestionDTO(q);
+		qq.setAnswers(ansd);
+		
+		return new ResponseEntity<QuestionDTO>(qq, HttpStatus.OK);
 	}
 	
 	@PutMapping("/update/{id}/{difficulty}")
