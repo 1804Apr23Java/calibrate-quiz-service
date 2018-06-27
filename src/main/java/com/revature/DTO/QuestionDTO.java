@@ -1,5 +1,7 @@
 package com.revature.DTO;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +26,7 @@ public class QuestionDTO implements Serializable {
 	private Integer difficulty;
 	private Integer libraryId;
 	
-	//private Set<AnswerDTO> answers;
+	private Set<AnswerDTO> answers;
 	
 	public QuestionDTO() {
 	}
@@ -35,18 +37,19 @@ public class QuestionDTO implements Serializable {
 		this.difficulty = q.getDifficulty();
 		this.libraryId = q.getLibrary_id();
 		
-//		Set<AnswerDTO> a = new HashSet<>();
-//		answerService.getAnswersByQuestion(q).forEach((e) -> { a.add(new AnswerDTO(e)); });
-//		this.answers = a;
+		Set<AnswerDTO> a = new HashSet<>();
+		for(Answer ans: answerService.getAnswersByQuestion(q)) {
+			a.add(new AnswerDTO(ans));
+		}
 	}
 	
-//	public Set<AnswerDTO> getAnswers() {
-//		return answers;
-//	}
-//
-//	public void setAnswers(Set<AnswerDTO> answers) {
-//		this.answers = answers;
-//	}
+	public Set<AnswerDTO> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(Set<AnswerDTO> answers) {
+		this.answers = answers;
+	}
 
 	public Integer getQuestionId() {
 		return questionId;
