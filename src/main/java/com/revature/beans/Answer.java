@@ -28,7 +28,7 @@ public class Answer {
 	@Column(name = "IS_CORRECT", nullable = false)
 	private boolean isCorrect;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_ANSWER_QUESTION"))
 	private Question question;
 	
