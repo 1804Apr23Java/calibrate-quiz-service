@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,17 @@ public class AnswerController {
 	}
 
 	@GetMapping("/question/{id}")
-	public ResponseEntity<Set<Answer>> getAnswersByQuestionId(@PathVariable int id) {
+	public ResponseEntity<Set<AnswerDTO>> getAnswersByQuestionId(@PathVariable int id) {
 		Set<Answer> answers = answerService.getAnswersByQuestionId(id);
-		return new ResponseEntity<Set<Answer>>(answers, HttpStatus.OK);
+		Set<AnswerDTO> ans = new HashSet<>();
+		answers.forEach((e) -> { ans.add(new AnswerDTO(e)); });
+		return new ResponseEntity<Set<AnswerDTO>>(ans, HttpStatus.OK);
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Answer> addAnswer(@RequestParam String content, @RequestParam boolean isCorrect, @RequestParam int question_id) {
+	public ResponseEntity<AnswerDTO> addAnswer(@RequestParam String content, @RequestParam boolean isCorrect, @RequestParam int question_id) {
 		Question q = questionService.getQuestion(question_id);
 		Answer a = answerService.saveAnswer(new Answer(content, isCorrect, q));
-		return new ResponseEntity<Answer>(a, HttpStatus.OK);
+		return new ResponseEntity<AnswerDTO>(new AnswerDTO(a), HttpStatus.OK);
 	}
 }
