@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.DTO.QuizDTO;
 import com.revature.beans.Question;
 import com.revature.beans.Quiz;
 import com.revature.service.QuestionService;
@@ -50,12 +51,12 @@ public class QuizControllerTest {
 		Response response = request.get("/quiz/" + q.getId());
 		assertEquals(200, response.getStatusCode());
 		
-		Quiz responseQuiz = new ObjectMapper().readValue(response.asString(), Quiz.class);
+		QuizDTO responseQuiz = new ObjectMapper().readValue(response.asString(), QuizDTO.class);
 		assertEquals(q.getName(), responseQuiz.getName());
 		assertEquals(q.getId(), responseQuiz.getId());
 		assertEquals(q.getQuestions(), responseQuiz.getQuestions());
 		
-		quizService.deleteQuiz(responseQuiz);
+		quizService.deleteQuiz(quizService.getQuiz(responseQuiz.getId()));
 		set.forEach((e) -> { questionService.deleteQuestion(e); });
 	}
 
@@ -85,12 +86,12 @@ public class QuizControllerTest {
 		Response response = request.get("/quiz/generate");
 		assertEquals(200, response.getStatusCode());
 		
-		Quiz responseQuiz = new ObjectMapper().readValue(response.asString(), Quiz.class);
+		QuizDTO responseQuiz = new ObjectMapper().readValue(response.asString(), QuizDTO.class);
 		assertEquals("Test Quiz 2", responseQuiz.getName());
 		assertEquals(5, responseQuiz.getQuestions().size());
 		assertEquals(set, responseQuiz.getQuestions());
 		
-		quizService.deleteQuiz(responseQuiz);
+		quizService.deleteQuiz(quizService.getQuiz(responseQuiz.getId()));
 		set.forEach((question) -> { questionService.deleteQuestion(question); });
 	}
 }
