@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,5 +54,54 @@ public class AnswerControllerTest {
 		questionService.deleteQuestion(q);
 	}
 	
+	@Test
+	public void getAnswerByQuestionIdTest() throws JsonParseException, JsonMappingException, IOException {
+		Question q = questionService.saveQuestion(new Question("What is 5 + 5?", 1, 207));
+		Answer a = answerService.saveAnswer(new Answer("10", true, q));
+		Answer b = answerService.saveAnswer(new Answer("11", false, q));
+		Answer c = answerService.saveAnswer(new Answer("12", false, q));
+		
+		Set<AnswerDTO> answers = new HashSet<>();
+		answers.add(new AnswerDTO(a));
+		answers.add(new AnswerDTO(b));
+		answers.add(new AnswerDTO(c));
+		
+		RestAssured.port = 8763;
+		RequestSpecification request = RestAssured.given();
+		Response response = request.get("/answer/question/" + q.getId());
+		
+		assertEquals(200, response.getStatusCode());
+		HashSet<Object> responseAnswers = new ObjectMapper().readValue(response.asString(), HashSet.class);
+		
+		assertEquals(answers.size(), responseAnswers.size());
+		
+		answerService.deleteAnswer(a);
+		answerService.deleteAnswer(b);
+		answerService.deleteAnswer(c);
+		questionService.deleteQuestion(q);
+	}
 	
+	@Test
+	public void addAnswerTest() throws JsonParseException, JsonMappingException, IOException {
+		Question q = questionService.saveQuestion(new Question("Test Question", 1, 1098));
+		
+		RestAssured.port = 8763;
+		RequestSpecification request = RestAssured.given();
+		request.formParam("content", "The capital of Italy is Rome");
+		request.formParam("isCorrect", true);
+		request.formParam("question_id", q.getId());
+		
+
+		Response response = request.post("/answer/add");
+		assertEquals(200, response.getStatusCode());
+		
+		AnswerDTO a = new ObjectMapper().readValue(response.asString(), AnswerDTO.class);
+		assertEquals("The capital of Italy is Rome", a.getAnswer_content());
+		assertEquals(true, a.isCorrect());
+		assertEquals(q.getId(), a.getQuestionId());
+		
+		Answer ans = answerService.getAnswer(a.getAnswer_id().intValue());
+		answerService.deleteAnswer(ans);
+		questionService.deleteQuestion(q);
+	}
 }
