@@ -1,5 +1,6 @@
 package com.revature.controller;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,11 @@ public class QuestionController {
 	private QuestionService questionService;
 	
 	@GetMapping("/lib/{library_id}")
-	public ResponseEntity<Set<Question>> getQuestionsByLibraryId(@PathVariable int library_id) {
+	public ResponseEntity<Set<QuestionDTO>> getQuestionsByLibraryId(@PathVariable int library_id) {
 		Set<Question> questions = questionService.getQuestionsByLibrary(library_id);
-		return new ResponseEntity<Set<Question>>(questions, HttpStatus.OK);
+		Set<QuestionDTO> questionDTOs = new HashSet<>();
+		questions.forEach((e) -> { questionDTOs.add(new QuestionDTO(e)); } );
+		return new ResponseEntity<Set<QuestionDTO>>(questionDTOs, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")

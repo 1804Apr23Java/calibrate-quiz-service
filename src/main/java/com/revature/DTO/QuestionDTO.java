@@ -6,65 +6,43 @@ import com.revature.beans.Answer;
 import com.revature.beans.Question;
 
 public class QuestionDTO {
-	private Integer id;
-	private String question_content;
+	private Integer questionId;
+	private String questionValue;
 	private Integer difficulty;
-	private Integer library_id;
-	
-	private Set<Answer> answers;
+	private Integer libraryId;
 	
 	public QuestionDTO(Question q) {
-		this.id = q.getId();
-		this.question_content = q.getQuestion_content();
+		this.questionId = q.getId();
+		this.questionValue = q.getQuestion_content();
 		this.difficulty = q.getDifficulty();
-		this.library_id = q.getLibrary_id();
+		this.libraryId = q.getLibrary_id();
 	}
-
-	public Integer getLibrary_id() {
-		return library_id;
+	
+	public Integer getQuestionId() {
+		return questionId;
 	}
-
-	public void setLibrary_id(Integer library_id) {
-		this.library_id = library_id;
+	public void setQuestionId(Integer questionId) {
+		this.questionId = questionId;
 	}
-
-	public QuestionDTO(Integer question_id, String question_content, Integer difficulty, Set<Answer> answers) {
-		super();
-		this.id = question_id;
-		this.question_content = question_content;
-		this.difficulty = difficulty;
-		this.answers = answers;
+	public String getQuestionValue() {
+		return questionValue;
 	}
-
-	public Integer getId() {
-		return id;
+	public void setQuestionValue(String questionValue) {
+		this.questionValue = questionValue;
 	}
-
-	public void setId(Integer question_id) {
-		this.id = question_id;
-	}
-
-	public String getQuestion_content() {
-		return question_content;
-	}
-
-	public void setQuestion_content(String question_content) {
-		this.question_content = question_content;
-	}
-
 	public Integer getDifficulty() {
 		return difficulty;
 	}
-
 	public void setDifficulty(Integer difficulty) {
 		this.difficulty = difficulty;
 	}
 
-	public Set<Answer> getAnswers() {
-		return answers;
+	public Integer getLibraryId() {
+		return libraryId;
 	}
 
-	public void setAnswers(Set<Answer> answers) {
-		this.answers = answers;
+	public void setLibraryId(Integer libraryId) {
+		this.libraryId = libraryId;
 	}
+	
 }
