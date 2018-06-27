@@ -40,9 +40,7 @@ public class AnswerServiceTest {
 		Answer a = as.saveAnswer(new Answer("The Capital of Mexico is Mexico City", true, this.q));
 		Answer savedAnswer = as.getAnswer(a.getId());
 		assertEquals(savedAnswer.getAnswer_content(), "The Capital of Mexico is Mexico City");
-		assertEquals(savedAnswer.getId(), a.getId());
-		assertEquals(savedAnswer.getQuestion().getQuestion_content(), this.q.getQuestion_content());
-		
+		assertEquals(savedAnswer.getId(), a.getId());		
 		as.deleteAnswer(savedAnswer);
 	
 		assertFalse(as.doesAnswerExist(savedAnswer.getId()));

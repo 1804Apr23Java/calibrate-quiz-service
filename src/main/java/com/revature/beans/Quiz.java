@@ -28,7 +28,7 @@ public class Quiz {
 	@Column(name = "NAME")
 	private String name;
 	
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "QUIZ_QUESTION",
 			   joinColumns = @JoinColumn(name = "QUIZ_ID", referencedColumnName  ="QUIZ_ID"),
 			   inverseJoinColumns = @JoinColumn(name = "QUESTION_ID", referencedColumnName = "QUESTION_ID")
