@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,5 +57,11 @@ public class AnswerController {
 		answerService.updateAnswerContent(id, value);
 		answerService.updateAnswerIsCorrect(id, isCorrect);
 		return new ResponseEntity<AnswerDTO>(new AnswerDTO(answerService.getAnswer(id)), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Boolean> deleteAnswer(@PathVariable int id) {
+		answerService.deleteAnswer(answerService.getAnswer(id));
+		return new ResponseEntity<Boolean>(new Boolean(true), HttpStatus.OK);
 	}
 }
