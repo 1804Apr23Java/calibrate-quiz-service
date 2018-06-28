@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +49,12 @@ public class AnswerController {
 		Question q = questionService.getQuestion(question_id);
 		Answer a = answerService.saveAnswer(new Answer(content, isCorrect, q));
 		return new ResponseEntity<AnswerDTO>(new AnswerDTO(a), HttpStatus.OK);
+	}
+	
+	@PutMapping("/edit/{id}")
+	public ResponseEntity<AnswerDTO> editAnswer(@PathVariable int id, @RequestParam String value, @RequestParam boolean isCorrect) {
+		answerService.updateAnswerContent(id, value);
+		answerService.updateAnswerIsCorrect(id, isCorrect);
+		return new ResponseEntity<AnswerDTO>(new AnswerDTO(answerService.getAnswer(id)), HttpStatus.OK);
 	}
 }
