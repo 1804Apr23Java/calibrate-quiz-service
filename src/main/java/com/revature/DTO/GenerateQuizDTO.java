@@ -1,8 +1,13 @@
 package com.revature.DTO;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GenerateQuizDTO {
+public class GenerateQuizDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4892565304023079723L;
 	private String name;
 	private List<Integer> libraryIds;
 	private int numQuestions;
