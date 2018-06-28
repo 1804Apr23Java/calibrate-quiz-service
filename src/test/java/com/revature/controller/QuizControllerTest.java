@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.revature.DTO.GenerateQuizDTO;
 import com.revature.DTO.QuizDTO;
 import com.revature.beans.Question;
@@ -82,8 +83,13 @@ public class QuizControllerTest {
 		RestAssured.port = 8763;
 		RequestSpecification request = RestAssured.given();
 		
-		GenerateQuizDTO adfd = new GenerateQuizDTO("Test Quiz 2", list, 5);
-		request.body(adfd);
+		JsonObject x = new JsonObject();
+		x.addProperty("name", "Test Quiz 2");
+		x.addProperty("libraryIds", list.toString());
+		x.addProperty("numQuestions", new Integer(5));
+		
+		request.contentType("application/json");
+		request.body(x.toString());
 		Response response = request.post("/quiz/generate");
 		assertEquals(200, response.getStatusCode());
 		
