@@ -88,6 +88,7 @@ public class QuizControllerTest {
 		
 		GenerateQuizDTO x = new GenerateQuizDTO("Test Quiz 2", list, 5);
 		Gson g = new Gson();
+		request.contentType("application/json");
 		request.body(g.toJson(x));
 		
 		Response response = request.post("/quiz/generate");
