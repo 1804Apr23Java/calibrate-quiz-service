@@ -13,6 +13,20 @@ public class QuizDTO {
 		super();
 	}
 	
+	
+	
+	public Integer getQuizId() {
+		return quizId;
+	}
+
+
+
+	public void setQuizId(Integer quizId) {
+		this.quizId = quizId;
+	}
+
+
+
 	public QuizDTO(Quiz q) {
 		this.quizId = q.getId();
 		this.name = q.getName();
@@ -31,12 +45,6 @@ public class QuizDTO {
 		this.name = name;
 	}
 
-	public Integer getQuizId() {
-		return quizId;
-	}
-	public void setQuizId(Integer id) {
-		this.quizId = quizId;
-	}
 	public String getName() {
 		return name;
 	}
