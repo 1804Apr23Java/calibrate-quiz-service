@@ -1,17 +1,9 @@
 package com.revature.DTO;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.revature.beans.Answer;
 import com.revature.beans.Question;
-import com.revature.service.AnswerService;
-import com.revature.service.QuestionService;
 
 public class QuestionDTO implements Serializable {
 	/**
