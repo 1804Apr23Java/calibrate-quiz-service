@@ -86,7 +86,7 @@ public class QuizControllerTest {
 		RestAssured.port = 8763;
 		RequestSpecification request = RestAssured.given();
 		
-		GenerateQuizDTO x = new GenerateQuizDTO("Test Quiz 2", list, 5));
+		GenerateQuizDTO x = new GenerateQuizDTO("Test Quiz 2", list, 5);
 		Gson g = new Gson();
 		request.body(g.toJson(x));
 		
