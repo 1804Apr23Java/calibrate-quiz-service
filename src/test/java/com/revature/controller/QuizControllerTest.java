@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.DTO.GenerateQuizDTO;
 import com.revature.DTO.QuizDTO;
 import com.revature.beans.Question;
 import com.revature.beans.Quiz;
@@ -80,9 +81,9 @@ public class QuizControllerTest {
 		
 		RestAssured.port = 8763;
 		RequestSpecification request = RestAssured.given();
-		request.formParam("libraryIds", list);
-		request.formParam("name", "Test Quiz 2");
-		request.formParam("numQuestions", 5);
+		
+		GenerateQuizDTO adfd = new GenerateQuizDTO("Test Quiz 2", list, 5);
+		request.body(adfd);
 		Response response = request.post("/quiz/generate");
 		assertEquals(200, response.getStatusCode());
 		

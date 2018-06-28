@@ -12,6 +12,12 @@ public class GenerateQuizDTO {
 	public GenerateQuizDTO() {
 		super();
 	}
+	public GenerateQuizDTO(String string, List<Integer> list, int i) {
+		this.name = string;
+		this.libraryIds = list;
+		this.numQuestions = i;
+	}
+	
 	public String getName() {
 		return name;
 	}
