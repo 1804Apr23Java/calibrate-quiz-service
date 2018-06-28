@@ -2,6 +2,7 @@ package com.revature.controller;
 
 import java.util.HashSet;
 import com.revature.DTO.AnswerDTO;
+import com.revature.DTO.GenerateQuizDTO;
 import com.revature.DTO.QuestionDTO;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,8 +39,8 @@ public class QuizController {
 	private AnswerService answerService;
 	
 	@PostMapping("/generate")
-	public ResponseEntity<QuizDTO> generateQuiz(@RequestParam List<Integer> libraryIds, @RequestParam String name, @RequestParam int numQuestions) {
-		Quiz q = quizService.generateQuiz(name, libraryIds, numQuestions);
+	public ResponseEntity<QuizDTO> generateQuiz(@RequestBody GenerateQuizDTO body) {
+		Quiz q = quizService.generateQuiz(body.getName(), body.getLibraryIds(), body.getNumQuestions());
 		
 		Set<QuestionDTO> ggg = new HashSet<QuestionDTO>();
 		q.getQuestions().forEach((e) -> {
