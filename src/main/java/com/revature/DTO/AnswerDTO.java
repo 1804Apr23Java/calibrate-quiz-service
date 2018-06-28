@@ -35,11 +35,11 @@ public class AnswerDTO {
 		this.value = value;
 	}
 
-	public boolean isCorrect() {
+	public boolean getIsCorrect() {
 		return isCorrect;
 	}
 
-	public void setCorrect(boolean isCorrect) {
+	public void setIsCorrect(boolean isCorrect) {
 		this.isCorrect = isCorrect;
 	}
 
