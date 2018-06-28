@@ -58,10 +58,10 @@ public class QuizControllerTest {
 		
 		QuizDTO responseQuiz = new ObjectMapper().readValue(response.asString(), QuizDTO.class);
 		assertEquals(q.getName(), responseQuiz.getName());
-		assertEquals(q.getId(), responseQuiz.getId());
+		assertEquals(q.getId(), responseQuiz.getQuizId());
 		//assertEquals(q.getQuestions(), responseQuiz.getQuestions());
 		
-		quizService.deleteQuiz(quizService.getQuiz(responseQuiz.getId()));
+		quizService.deleteQuiz(quizService.getQuiz(responseQuiz.getQuizId()));
 		set.forEach((e) -> { questionService.deleteQuestion(e); });
 	}
 
@@ -99,7 +99,7 @@ public class QuizControllerTest {
 		assertEquals(5, responseQuiz.getQuestions().size());
 		//assertEquals(set, responseQuiz.getQuestions());
 		
-		quizService.deleteQuiz(quizService.getQuiz(responseQuiz.getId()));
+		quizService.deleteQuiz(quizService.getQuiz(responseQuiz.getQuizId()));
 		set.forEach((question) -> { questionService.deleteQuestion(question); });
 	}
 }
