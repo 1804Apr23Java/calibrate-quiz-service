@@ -91,6 +91,9 @@ public class QuizControllerTest {
 		request.contentType("application/json");
 		request.body(g.toJson(x));
 		
+		System.out.println(g.toJson(x));
+		
+		
 		Response response = request.post("/quiz/generate");
 		assertEquals(200, response.getStatusCode());
 		
