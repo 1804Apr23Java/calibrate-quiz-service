@@ -97,7 +97,7 @@ public class AnswerControllerTest {
 		
 		AnswerDTO a = new ObjectMapper().readValue(response.asString(), AnswerDTO.class);
 		assertEquals("The capital of Italy is Rome", a.getValue());
-		assertEquals(true, a.isCorrect());
+		assertEquals(true, a.getIsCorrect());
 		assertEquals(q.getId(), a.getQuestionId());
 		
 		Answer ans = answerService.getAnswer(a.getAnswerId().intValue());
