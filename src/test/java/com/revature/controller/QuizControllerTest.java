@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.revature.DTO.GenerateQuizDTO;
 import com.revature.DTO.QuizDTO;
@@ -83,13 +86,10 @@ public class QuizControllerTest {
 		RestAssured.port = 8763;
 		RequestSpecification request = RestAssured.given();
 		
-		JsonObject x = new JsonObject();
-		x.addProperty("name", "Test Quiz 2");
-		x.addProperty("libraryIds", list.toString());
-		x.addProperty("numQuestions", new Integer(5));
+		GenerateQuizDTO x = new GenerateQuizDTO("Test Quiz 2", list, 5));
+		Gson g = new Gson();
+		request.body(g.toJson(x));
 		
-		request.contentType("application/json");
-		request.body(x.toString());
 		Response response = request.post("/quiz/generate");
 		assertEquals(200, response.getStatusCode());
 		

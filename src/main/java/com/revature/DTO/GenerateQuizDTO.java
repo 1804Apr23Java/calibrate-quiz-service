@@ -2,8 +2,9 @@ package com.revature.DTO;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
-public class GenerateQuizDTO implements Serializable {
+public class GenerateQuizDTO implements Serializable, Map {
 	/**
 	 * 
 	 */
