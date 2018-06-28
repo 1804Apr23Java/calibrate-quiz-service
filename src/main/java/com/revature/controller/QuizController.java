@@ -42,6 +42,10 @@ public class QuizController {
 	public ResponseEntity<QuizDTO> generateQuiz(@RequestBody GenerateQuizDTO body) {
 		Quiz q = quizService.generateQuiz(body.getName(), body.getLibraryIds(), body.getNumQuestions());
 		
+		if(body.getName() != null) {
+			return new ResponseEntity<QuizDTO>(new QuizDTO(), HttpStatus.CONFLICT);
+		}
+		
 		Set<QuestionDTO> ggg = new HashSet<QuestionDTO>();
 		q.getQuestions().forEach((e) -> {
 			QuestionDTO z = new QuestionDTO(e);
