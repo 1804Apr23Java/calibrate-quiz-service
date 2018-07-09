@@ -1,1 +1,0 @@
-# calibrate-quiz-service
