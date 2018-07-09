@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: quiz
+  cloud:
+    config:
+      uri: ${CONFIG_HOME}
+      fail-fast: true
